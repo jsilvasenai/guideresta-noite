@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<!-- Import Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="/css/style.css" />
+<title>RestaGuide</title>
+</head>
+<body>
+
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+
+	<div class="container">
+		<h5 class="titulo_h5">
+			<a href="/formTipoRestaurante"><i class="material-icons left">add_circle</i>
+				Incluir Tipo de Restaurante </a>
+		</h5>
+
+		<div class="row">
+			<form action="/buscarTipos" method="get">
+				<div class="input-field col s6">
+					<input placeholder="Busca por palavras chave ou por nome"
+						type="search" name="parametro" required="required" />
+				</div>
+
+				<div class="input-field col s2">
+					<button class="indigo darken-1 waves-effect waves-light btn"
+						type="submit">
+						<i class="material-icons left">search</i>Buscar
+					</button>
+				</div>
+
+			</form>
+		</div>
+
+		<div th:replace="fragments/mensagem"></div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nome</th>
+					<th>Descrição</th>
+					<th>Palavras chave</th>
+					<th>Alterar</th>
+					<th>Excluir</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="tipo:${tipos}">
+					<td th:text="${tipo.id}" />
+					<td th:text="${tipo.nome}" />
+					<td th:text="${tipo.descricao}" />
+					<td th:text="${tipo.palavrasChave}" />
+
+					<td><a th:href="@{/alterarTipo(idTipo=${tipo.id})}"><button
+								class="green accent-4 btn-small">
+								<i class="material-icons">edit</i>
+							</button></a></td>
+					<td><a th:href="@{/excluirTipo(idTipo=${tipo.id})}"><button
+								class="red accent-2 btn-small">
+								<i class="material-icons">delete</i>
+							</button></a></td>
+
+				</tr>
+			</tbody>
+		</table>
+
+
+		<ul class="pagination">
+			<li th:class="${paginaAtual == 1 ? 'disabled' : 'waves-effect'}">
+				<a th:href="${paginaAtual > 1 ? paginaAtual - 1 : '#'}"> <i
+					class="material-icons">chevron_left</i></a>
+			</li>
+
+			<li th:each="p:${numPaginas}"
+				th:class="${paginaAtual == p ? 'active blue' : 'waves-effect'}">
+				<a th:href="${p}"><span th:text="${p}"></span></a>
+			</li>
+
+			<li
+				th:class="${paginaAtual == totalPaginas ? 'disabled' : 'waves-effect'}">
+				<a th:href="${paginaAtual < totalPaginas ? paginaAtual+1 : '#'}"><i
+					class="material-icons">chevron_right</i></a>
+			</li>
+		</ul>
+	</div>
+
+	<footer th:replace="fragments/padrao :: rodape"></footer>
+</body>
+</html>

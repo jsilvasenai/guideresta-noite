@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<title>RestaGuide</title>
+<meta charset="utf-8">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<!-- Import Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+	<br />
+	<br />
+	<div class="container">
+		<h5 class="titulo_h5">Cadastro de Tipos de Restaurante</h5>
+		<br />
+		<form action="salvarTipo" method="post">
+			<input type="hidden" th:value="${tipo?.id}" name="id" />
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">account_circle</i> <input
+						type="text" th:value="${tipo?.nome}" name="nome" required
+						id="input_nome" /> <label for="input_nome">Nome:</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">format_align_left</i> <label
+						for="input_descricao">Descrição:</label>
+					<textarea id="input_descricao" name="descricao" class="materialize-textarea"
+						th:text="${tipo?.descricao}"></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">label</i> <label
+						for="input_palavra_chave">Palavras Chave:</label> <input
+						type="text" name="palavrasChave" id="input_palavra_chave" th:value="${tipo?.palavrasChave}"/>
+				</div>
+			</div>
+
+			<button class="indigo darken-1 waves-effect waves-light btn"
+				type="submit">
+				<i class="material-icons left">save</i>Salvar
+			</button>
+		</form>
+		<br /> <br />
+
+		<div th:replace="fragments/mensagem"></div>
+
+	</div>
+
+	<footer th:replace="fragments/padrao :: rodape"></footer>
+	<!-- scripts -->
+	<script src="/materialize/js/materialize.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<title>RestaGuide</title>
+<meta charset="utf-8">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<!-- Import Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+	<br />
+	<br />
+	<div class="container">
+		<h5 class="titulo_h5">Cadastro de Restaurantes</h5>
+		<br />
+		<form action="salvarRestaurante" method="post" enctype="multipart/form-data">
+
+			<input type="hidden" th:value="${restaurante?.id}" name="id" />
+			<div class="row">
+
+				<div class="input-field col s8">
+					<i class="material-icons prefix">info</i> <label for="input_nome">Nome
+						do Restaurante:</label> <input type="text" th:value="${restaurante?.nome}"
+						name="nome" required id="input_nome" />
+				</div>
+
+				<div class="input-field col s4">
+
+					<select required name="tipo.id">
+						<option value="" disabled selected>Escolha</option>
+						<option th:each="t: ${tipos}" th:value="${t.id}"
+							th:text="${t.nome}"
+							th:selected="${t.id == restaurante?.tipo?.id}"></option>
+					</select> <label>Tipo de restaurante:</label>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">description</i> <label
+						for="input_descricao">Descrição do Restaurante:</label>
+					<textarea id="input_descricao" class="materialize-textarea"
+						th:text="${restaurante?.descricao}" name="descricao"></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s3">
+					<i class="material-icons prefix">place</i> <label for="input_cep">CEP:</label>
+					<input type="text" th:value="${restaurante?.cep}" name="cep"
+						required id="input_cep" onblur="pesquisacep(this.value)" />
+				</div>
+
+				<div class="input-field col s7">
+					<input type="text" th:value="${restaurante?.endereco}"
+						name="endereco" readonly placeholder="..." required id="input_end" />
+					<label for="input_end">Endereço:</label>
+				</div>
+
+				<div class="input-field col s2">
+					<label for="input_numero">Número:</label> <input type="text"
+						th:value="${restaurante?.numero}" name="numero" required
+						id="input_numero" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s4">
+					<label for="input_bairro">Bairro:</label> <input type="text"
+						th:value="${restaurante?.bairro}" name="bairro" readonly
+						placeholder="..." required id="input_bairro" />
+				</div>
+				<div class="input-field col s4">
+					<label for="input_bairro">Cidade:</label> <input type="text"
+						th:value="${restaurante?.cidade}" name="cidade" readonly
+						placeholder="..." required id="input_cidade" />
+				</div>
+				<div class="input-field col s2">
+					<label for="input_bairro">Estado:</label> <input type="text"
+						th:value="${restaurante?.estado}" name="estado" readonly
+						placeholder="..." required id="input_estado" />
+				</div>
+				<div class="input-field col s2">
+					<label for="input_complemento">Complemento:</label> <input
+						type="text" th:value="${restaurante?.complemento}"
+						name="complemento"  id="input_complemento" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<i class="material-icons prefix">link</i> <label for="input_site">Website:</label>
+					<input type="url" th:value="${restaurante?.site}" name="site"
+						 id="input_site" />
+				</div>
+				<div class="input-field col s4">
+					<i class="material-icons prefix">access_time</i> <label
+						for="input_horario">Horário:</label> <input type="text"
+						th:value="${restaurante?.horario}" name="horario"
+						id="input_horario" />
+				</div>
+
+				<div class="input-field col s2">
+					<i class="material-icons prefix">local_phone</i> <label
+						for="input_telefone">Telefone:</label> <input type="text"
+						th:value="${restaurante?.telefone}" name="telefone" required
+						id="input_telefone" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s8">
+					<i class="material-icons prefix">monetization_on</i> <label
+						for="input_formas">Formas de pagamento:</label> <input type="text"
+						th:value="${restaurante?.formasPagamento}" name="formasPagamento"
+						id="input_formas" />
+				</div>
+				<div class="input-field col s1">
+					<i class="material-icons prefix">attach_money</i><label
+						for="input_formas">Preço:</label> 
+				</div>
+				<div class="input-field col s3">
+
+					<p class="range-field">
+						<input type="range" min="1" max="5" />
+					</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">library_music</i> <label
+						for="input_atracoes">Atrações do Restaurante:</label> <input
+						type="text" th:value="${restaurante?.atracoes}" name="atracoes"
+						 id="input_atracoes" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s2">
+					<i class="material-icons prefix">toys</i> <label> <input
+						type="checkbox" name="playground" class="filled-in" /> <span>Playground</span>
+					</label>
+				</div>
+				<div class="input-field col s2">
+					<i class="material-icons prefix">local_parking</i> <label>
+						<input type="checkbox" name="estacionamento" class="filled-in" />
+						<span>Estacionamento</span>
+					</label>
+				</div>
+				<div class="input-field col s2">
+					<i class="material-icons prefix">drive_eta</i> <label> <input
+						type="checkbox" name="driveThru" class="filled-in" /> <span>Drive-Thru</span>
+					</label>
+				</div>
+				<div class="input-field col s2">
+					<i class="material-icons prefix">pets</i> <label> <input
+						type="checkbox" name="espacoPet" class="filled-in" /> <span>Espaço
+							Pet</span>
+					</label>
+				</div>
+				<div class="input-field col s2">
+					<i class="material-icons prefix">local_shipping</i> <label>
+						<input type="checkbox" name="delivery" class="filled-in" /> <span>Delivery</span>
+					</label>
+				</div>
+				<div class="input-field col s2">
+					<i class="material-icons prefix">accessible</i> <label> <input
+						type="checkbox" name="acessivel" class="filled-in" /> <span>Acessível</span>
+					</label>
+				</div>
+			</div>
+			<br /> <br /> <input type="hidden" th:value="${restaurante?.fotos}"
+				name="fotos" />
+
+			<div class="row">
+				<div class="file-field input-field col s12">
+					<div class="indigo lighten-3  waves-light btn-small">
+						<span>Fotos</span> <input type="file" name="fileFotos" multiple
+							accept="image/*">
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text"
+							placeholder="Upload de uma ou várias fotos">
+					</div>
+				</div>
+			</div>
+
+
+
+			<br />
+			<button class="indigo darken-1 waves-light btn" type="submit">
+				<i class="material-icons left">save</i>Salvar
+			</button>
+		</form>
+		<br /> <br /> <br />
+		<th:block th:include="fragments/mensagem"></th:block>
+	</div>
+
+	<footer th:replace="fragments/padrao :: rodape"></footer>
+	<!-- scripts -->
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="/materialize/js/materialize.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+	<script>
+		$(function() {
+			$('select').formSelect();
+			// máscara do cep
+			$("#input_cep").mask('99999-999');
+
+		});
+
+		function pesquisacep(cep) {
+
+			//Verifica se campo cep possui valor informado.
+			if (cep != "") {
+
+				//Cria um elemento javascript.
+				var script = document.createElement('script');
+
+				//Sincroniza com o callback.
+				script.src = 'https://viacep.com.br/ws/' + cep
+						+ '/json/?callback=cep_callback';
+
+				//Insere script no documento e carrega o conteúdo.
+				document.body.appendChild(script);
+
+			} //end if.
+			else {
+				//cep sem valor, limpa formulário.
+				limpa_formulário_cep();
+			}
+		}
+
+		function cep_callback(conteudo) {
+			if (!("erro" in conteudo)) {
+				console.log(conteudo);
+				//Atualiza os campos com os valores.
+				document.getElementById('input_end').value = (conteudo.logradouro);
+				document.getElementById('input_bairro').value = (conteudo.bairro);
+				document.getElementById('input_cidade').value = (conteudo.localidade);
+				document.getElementById('input_estado').value = (conteudo.uf);
+			} //end if.
+			else {
+				//CEP não Encontrado.
+				limpa_formulário_cep();
+				alert("CEP não encontrado.");
+			}
+		}
+
+		function limpa_formulário_cep() {
+			//Limpa valores do formulário de cep.
+			document.getElementById('logradouro').value = ("");
+			document.getElementById('bairro').value = ("");
+			document.getElementById('cidade').value = ("");
+			document.getElementById('uf').value = ("");
+		}
+		/*		
+		 function excluir_foto(idRestaurante, numeroFoto) {
+		 $.post("excluirFotoRestaurante", {
+		 'idRestaurante' : idRestaurante,
+		 'numFoto': numeroFoto
+		 }, function() {
+		 $('#foto_' + numeroFoto).hide('slow');
+		 });
+		 }
+		 */
+	</script>
+
+</body>
+</html>

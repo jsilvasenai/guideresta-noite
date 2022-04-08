@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>GuideResta</title>
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<!-- Import Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+
+	<div class="container">
+		<h5 class="titulo_h5">
+			<a href="/formAdministrador"><i class="material-icons left">add_circle</i>Incluir
+				Administrador</a>
+		</h5>
+	</div>
+	<table class="container striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>E-mail</th>
+				<th>Alterar</th>
+				<th>Excluir</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="adm:${admins}">
+				<td th:text="${adm.id}" />
+				<td th:text="${adm.nome}" />
+				<td th:text="${adm.email}" />
+				<td><a th:href="@{/alterarAdm(idAdm=${adm.id})}"><button
+							class="green accent-4 btn-small">
+							<i class="material-icons">edit</i>
+						</button></a></td>
+				<td><a th:href="@{/excluirAdm(idAdm=${adm.id})}"><button
+							class="red accent-2 btn-small">
+							<i class="material-icons">delete</i>
+						</button></a></td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+	<ul class="pagination">
+		<li th:class="${pagAtual == 1 ? 'disabled' : 'waves-effect'}"><a
+			th:href="${pagAtual > 1 ? pagAtual - 1 : '#'}"><i
+				class="material-icons">chevron_left</i></a></li>
+
+		<li th:class="${pagAtual == p ? 'active blue' : 'waves-effect'}"
+			th:each="p:${numPaginas}"><a th:href="${p}"><span
+				th:text="${p}"></span></a></li>
+
+		<li th:class="${pagAtual == totalPags ? 'disabled' : 'waves-effect'}"
+			class="waves-effect"><a
+			th:href="${pagAtual < totalPags ? pagAtual + 1 : '#'}"><i
+				class="material-icons">chevron_right</i></a></li>
+	</ul>
+
+	<footer th:replace="fragments/padrao :: rodape"></footer>
+</body>
+</html>

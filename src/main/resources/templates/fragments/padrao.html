@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<header th:fragment="cabecalho">
+		<nav>
+			<div class="indigo darken-4 nav-wrapper">
+				<a href="/listarRestaurante/1" class="brand-logo"><i
+					class="material-icons" style="margin-left: 10px">restaurant_menu</i>GuideResta
+					- Admin</a>
+				<ul class="right hide-on-med-and-down">
+
+					<li><a href="/listaAdmin/1"
+						class="blue waves-effect waves-light btn-small">Administradores</a></li>
+					<li><a href="/listarTipos/1"
+						class="blue waves-effect waves-light btn-small">Tipos de
+							restaurante</a></li>
+
+					<li><a href="/logout" class="red lighten-1 btn-small"><i
+							class="material-icons prefix">exit_to_app</i></a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<footer th:fragment="rodape" class="indigo darken-4 page-footer rodape">
+		<div class="container">© 2022 RestaGuide</div>
+
+	</footer>
+</body>
+</html>
