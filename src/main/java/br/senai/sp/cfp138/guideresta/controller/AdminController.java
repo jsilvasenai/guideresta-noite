@@ -3,6 +3,7 @@ package br.senai.sp.cfp138.guideresta.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,5 +113,21 @@ public class AdminController {
 	public String excluirTipo(Long idAdm) {
 		repository.deleteById(idAdm);
 		return "redirect:/listaAdmin/1";
+	}
+	
+	@RequestMapping("login")
+	public String login(Administrador admLogin, RedirectAttributes attr, HttpSession session) {
+		// buscar o Administrador no banco
+		Administrador admin = repository.
+				findByEmailAndSenha(admLogin.getEmail(), admLogin.getSenha());
+		// verificar se existe
+		if(admin == null) {
+			attr.addFlashAttribute("mensagemErro", "Login e/ou senha inválido(s)");
+			return "redirect:/";
+		}else {
+			// salva o administrador na sessão
+			session.setAttribute("usuarioLogado", admin);
+			return "redirect:/listarRestaurante/1";
+		}
 	}
 }

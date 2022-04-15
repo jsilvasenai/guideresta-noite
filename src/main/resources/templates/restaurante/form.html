@@ -128,7 +128,7 @@
 				<div class="input-field col s3">
 
 					<p class="range-field">
-						<input type="range" min="1" max="5" />
+						<input type="range" name="preco" th:value="${restaurante?.preco}" min="1" max="5" />
 					</p>
 				</div>
 			</div>
@@ -145,34 +145,34 @@
 			<div class="row">
 				<div class="input-field col s2">
 					<i class="material-icons prefix">toys</i> <label> <input
-						type="checkbox" name="playground" class="filled-in" /> <span>Playground</span>
+						type="checkbox" name="playground" class="filled-in" th:checked="${restaurante?.playground}" /> <span>Playground</span>
 					</label>
 				</div>
 				<div class="input-field col s2">
 					<i class="material-icons prefix">local_parking</i> <label>
-						<input type="checkbox" name="estacionamento" class="filled-in" />
+						<input type="checkbox" name="estacionamento" class="filled-in" th:checked="${restaurante?.estacionamento}" />
 						<span>Estacionamento</span>
 					</label>
 				</div>
 				<div class="input-field col s2">
 					<i class="material-icons prefix">drive_eta</i> <label> <input
-						type="checkbox" name="driveThru" class="filled-in" /> <span>Drive-Thru</span>
+						type="checkbox" name="driveThru" class="filled-in"  th:checked="${restaurante?.driveThru}"/> <span>Drive-Thru</span>
 					</label>
 				</div>
 				<div class="input-field col s2">
 					<i class="material-icons prefix">pets</i> <label> <input
-						type="checkbox" name="espacoPet" class="filled-in" /> <span>Espaço
+						type="checkbox" name="espacoPet" class="filled-in"  th:checked="${restaurante?.espacoPet }"/> <span>Espaço
 							Pet</span>
 					</label>
 				</div>
 				<div class="input-field col s2">
 					<i class="material-icons prefix">local_shipping</i> <label>
-						<input type="checkbox" name="delivery" class="filled-in" /> <span>Delivery</span>
+						<input type="checkbox" name="delivery" class="filled-in" th:checked="${restaurante?.delivery}"/> <span>Delivery</span>
 					</label>
 				</div>
 				<div class="input-field col s2">
 					<i class="material-icons prefix">accessible</i> <label> <input
-						type="checkbox" name="acessivel" class="filled-in" /> <span>Acessível</span>
+						type="checkbox" name="acessibilidade" class="filled-in" th:checked="${restaurante?.acessibilidade}" /> <span>Acessível</span>
 					</label>
 				</div>
 			</div>
@@ -192,7 +192,19 @@
 				</div>
 			</div>
 
-
+			<div th:if="${restaurante?.fotos.length > 0}">
+				<h6>Fotos cadastradas</h6>
+				<div>
+					<ul id="lista_fotos_cadrest">
+						<li th:each="foto, i : ${restaurante?.verFotos()}">
+							<a th:href="${foto}" target="_blank"><img th:src="${foto}"></a>
+							<a th:href="@{/excluirFotos(idRest=${restaurante?.id},numFoto=${i.index})}">
+								<i class="material-icons">delete_forever</i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 
 			<br />
 			<button class="indigo darken-1 waves-light btn" type="submit">

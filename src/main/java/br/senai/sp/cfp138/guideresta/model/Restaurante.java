@@ -41,4 +41,9 @@ public class Restaurante {
 	@Column(columnDefinition = "TEXT")
 	private String fotos;
 	private int preco;
+	
+	// retorna as fotos na forma de vetor de String
+	public String[] verFotos() {
+		return fotos.split(";");
+	}
 }

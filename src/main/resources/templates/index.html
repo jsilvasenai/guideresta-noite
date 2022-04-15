@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<title>RestaGuide</title>
+<meta charset="utf-8">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<!-- Import Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+	<br />
+	<br />
+	<div class="container">
+		<div class="row">
+		<div class="col s4 offset-s4" id="form_login">
+			<form action="login">
+				<br/>
+				<div class="input-field">
+					<i class="material-icons prefix">supervisor_account</i> 
+					<input id="input_email" type="email" required name="email"><label
+						for="input_email">E-mail</label>
+				</div>
+				<div class="input-field">
+					<i class="material-icons prefix">lock</i> 
+					<input id="input_senha" type="password" required name="senha"><label
+						for="input_senha">Senha</label>
+				</div>
+				<div>
+					<button class="indigo lighten-3 btn-small" type="submit">Entrar</button>
+				</div>
+				<br/>
+			</form>
+			<th:block th:include="fragments/mensagem"></th:block>
+		</div>
+	</div>
+	</div>
+
+	<footer th:replace="fragments/padrao :: rodape"></footer>
+	<!-- scripts -->
+	<script src="/materialize/js/materialize.min.js"></script>
+</body>
+</html>
