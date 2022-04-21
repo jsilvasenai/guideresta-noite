@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.senai.sp.cfp138.guideresta.annotation.Publico;
 import br.senai.sp.cfp138.guideresta.model.Administrador;
 import br.senai.sp.cfp138.guideresta.repository.AdminRepository;
 import br.senai.sp.cfp138.guideresta.util.HashUtil;
@@ -115,6 +116,7 @@ public class AdminController {
 		return "redirect:/listaAdmin/1";
 	}
 	
+	@Publico
 	@RequestMapping("login")
 	public String login(Administrador admLogin, RedirectAttributes attr, HttpSession session) {
 		// buscar o Administrador no banco
@@ -129,5 +131,13 @@ public class AdminController {
 			session.setAttribute("usuarioLogado", admin);
 			return "redirect:/listarRestaurante/1";
 		}
+	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		// invalida a sessão
+		session.invalidate();
+		// voltar para a página inicial
+		return "redirect:/";
 	}
 }
