@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<title>RistorApp</title>
+<meta charset="utf-8">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
+<!-- Import Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<header th:replace="fragments/padrao :: cabecalho"></header>
+
+	<table class="container striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th style="width:50%;">Nome</th>
+				<th>E-mail</th>
+				<th>Excluir</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr th:each="usuario: ${usuarios}">
+				<td th:text="${usuario.id}"></td>
+				<td th:text="${usuario.nome}"></td>
+				<td th:text="${usuario.email}"></td>
+				<td><a th:href="@{/excluirUsuario(idUsuario=${usuario.id})}"><button  class="red accent-2 btn-small">
+						<i class="material-icons">delete</i>
+					</button></a></td>
+			</tr>
+		</tbody>
+
+	</table>
+	<ul class="pagination">
+		<li th:class="${currentPage == 1 ? 'disabled' : ''}"><a th:href="${currentPage > 1 ? page-1: '#'}"><i class="material-icons">chevron_left</i></a></li>
+		<li th:each="page:${pageNumbers}" th:class="${currentPage == page} ? 'active blue' : 'waves-effect'" ><a th:href="${page}"><span th:text="${page}"></span></a> </li>
+		<li th:class="${currentPage == totalPages ? 'disabled' : ''}"><a th:href="${currentPage < totalPages ? page+1: '#'}"><i
+				class="material-icons">chevron_right</i></a></li>
+	</ul>
+	<br />
+	<br />
+
+
+	<footer th:replace="fragments/padrao :: rodape"></footer>
+</body>
+
+</html>
